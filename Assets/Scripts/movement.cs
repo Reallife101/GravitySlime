@@ -6,7 +6,7 @@ public class movement : MonoBehaviour
 {
     [SerializeField] float movementSpeed = 12.0f;
     [SerializeField] Animator animator;
-    [SerializeField] float speed = 6.0f;
+    public float speed = 6.0f;
 
     Vector3 gravity;
     bool isGrounded;
