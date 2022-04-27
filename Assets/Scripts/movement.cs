@@ -6,11 +6,15 @@ public class movement : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] float gravityMultiplier = 1.0f;
+    [SerializeField] float lerpDuration = 0.5f;
     public float speed = 6.0f;
+    public bool canChangeGravity = true;
+    public bool infiniteGravSwitch = false;
 
     Vector3 gravity;
     bool isGrounded;
     Rigidbody rb;
+    bool dead = false;
 
     private void Start()
     {
@@ -31,12 +35,17 @@ public class movement : MonoBehaviour
     private void Update()
     {
         // Flip gravity and play animation
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity)
         {
             gravity = -gravity;
-            StartCoroutine(Lerp(.5f, transform.localScale.y, -transform.localScale.y));
+            StartCoroutine(Lerp(lerpDuration, transform.localScale.y, -transform.localScale.y));
             animator.SetBool("jump", true);
             isGrounded = false;
+        }
+        
+        if(rb.velocity.x == 0 && !dead)
+        {
+            die();
         }
     }
 
@@ -45,6 +54,14 @@ public class movement : MonoBehaviour
         // reset gravity flip
         isGrounded = true;
         animator.SetBool("jump", false);
+    }
+
+    public void die()
+    {
+        animator.SetTrigger("death");
+        StartCoroutine(turnOffplayer());
+        speed = 0f;
+        dead = true;
     }
 
     // Lerp animation for flipping gravity
@@ -58,6 +75,12 @@ public class movement : MonoBehaviour
             yield return null;
         }
         transform.localScale = new Vector3(transform.localScale.x, end, transform.localScale.z);
+    }
+
+    IEnumerator turnOffplayer()
+    {
+        yield return new WaitForSeconds(.75f);
+        gameObject.SetActive(false);
     }
 
 }

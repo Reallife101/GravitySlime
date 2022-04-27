@@ -950,6 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 991145798}
   gravityMultiplier: 2.5
+  lerpDuration: 0.5
   speed: 9
 --- !u!65 &991145803
 BoxCollider:
