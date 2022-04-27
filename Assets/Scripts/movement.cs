@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    [SerializeField] float movementSpeed = 12.0f;
     [SerializeField] Animator animator;
+    [SerializeField] float gravityMultiplier = 1.0f;
     public float speed = 6.0f;
 
     Vector3 gravity;
@@ -15,7 +15,7 @@ public class movement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        gravity = Physics.gravity;
+        gravity = Physics.gravity * gravityMultiplier;
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class movement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             gravity = -gravity;
-            StartCoroutine(Lerp(1f, transform.localScale.y, -transform.localScale.y));
+            StartCoroutine(Lerp(.5f, transform.localScale.y, -transform.localScale.y));
             animator.SetBool("jump", true);
             isGrounded = false;
         }
