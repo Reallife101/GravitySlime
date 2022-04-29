@@ -7,6 +7,17 @@ public class movement : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float gravityMultiplier = 1.0f;
     [SerializeField] float lerpDuration = 0.5f;
+
+    // Kill player variables
+    [SerializeField] float killDistance = 15f;
+    [SerializeField] float killSpeed = 1f;
+
+    // Ground Check
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundDistance = 0.4f;
+    [SerializeField] LayerMask groundMask;
+
+    // Player Attributes
     public float speed = 6.0f;
     public bool canChangeGravity = true;
     public bool infiniteGravSwitch = false;
@@ -34,16 +45,19 @@ public class movement : MonoBehaviour
 
     private void Update()
     {
+        //Grounded
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         // Flip gravity and play animation
         if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity)
         {
             gravity = -gravity;
             StartCoroutine(Lerp(lerpDuration, transform.localScale.y, -transform.localScale.y));
             animator.SetBool("jump", true);
-            isGrounded = false;
         }
         
-        if(rb.velocity.x == 0 && !dead)
+        // Kill player if they stop moving or fall off
+        if((Mathf.Abs(rb.velocity.x) <= killSpeed && !dead) || Mathf.Abs(transform.position.y) > killDistance)
         {
             die();
         }
@@ -52,7 +66,6 @@ public class movement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // reset gravity flip
-        isGrounded = true;
         animator.SetBool("jump", false);
     }
 
