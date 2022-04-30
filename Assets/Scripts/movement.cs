@@ -95,6 +95,8 @@ public class movement : MonoBehaviour
         StartCoroutine(turnOffplayer());
         speed = 0f;
         dead = true;
+        am.bgmOff();
+        am.playExplode(au);
     }
 
     // Lerp animation for flipping gravity

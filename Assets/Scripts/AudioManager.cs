@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioClip gravitySwitch;
     [SerializeField] List<AudioClip> landingSounds;
+    [SerializeField] AudioClip explode1;
 
     AudioSource audio;
 
@@ -41,5 +42,19 @@ public class AudioManager : MonoBehaviour
         au.Pause();
     }
 
+    public void bgmOff()
+    {
+        audio.Pause();
+    }
+
+    public void bgmOn()
+    {
+        audio.UnPause();
+    }
+
+    public void playExplode(AudioSource au)
+    {
+        au.PlayOneShot(explode1, 1f);
+    }
 
 }
