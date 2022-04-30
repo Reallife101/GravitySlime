@@ -80,6 +80,8 @@ public class movement : MonoBehaviour
             am.stopFootsteps(footsteps);
             playFootsteps = true;
         }
+
+        // Debug.Log(rb.velocity);
     }
 
     private void OnCollisionEnter(Collision collision)
