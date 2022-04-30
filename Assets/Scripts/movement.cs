@@ -17,6 +17,8 @@ public class movement : MonoBehaviour
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
+    [SerializeField] AudioSource footsteps;
+
     // Player Attributes
     public float speed = 6.0f;
     public bool canChangeGravity = true;
@@ -26,11 +28,16 @@ public class movement : MonoBehaviour
     bool isGrounded;
     Rigidbody rb;
     bool dead = false;
+    AudioSource au;
+    AudioManager am;
+    bool playFootsteps = true;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         gravity = Physics.gravity * gravityMultiplier;
+        au = GetComponent<AudioSource>();
+        am = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -54,6 +61,7 @@ public class movement : MonoBehaviour
             gravity = -gravity;
             StartCoroutine(Lerp(lerpDuration, transform.localScale.y, -transform.localScale.y));
             animator.SetBool("jump", true);
+            am.playGravitySwitch(au);
         }
         
         // Kill player if they stop moving or fall off
@@ -61,12 +69,24 @@ public class movement : MonoBehaviour
         {
             die();
         }
+
+        if (isGrounded && playFootsteps)
+        {
+            am.playFootsteps(footsteps);
+            playFootsteps = false;
+        }
+        else if (!isGrounded && !playFootsteps)
+        {
+            am.stopFootsteps(footsteps);
+            playFootsteps = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         // reset gravity flip
         animator.SetBool("jump", false);
+        am.playLandingSound(au);
     }
 
     public void die()
