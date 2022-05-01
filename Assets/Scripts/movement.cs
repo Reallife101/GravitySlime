@@ -17,6 +17,8 @@ public class movement : MonoBehaviour
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
+    [SerializeField] AudioSource footsteps;
+
     // Player Attributes
     public float speed = 6.0f;
     public bool canChangeGravity = true;
@@ -26,11 +28,16 @@ public class movement : MonoBehaviour
     bool isGrounded;
     Rigidbody rb;
     bool dead = false;
+    AudioSource au;
+    AudioManager am;
+    bool playFootsteps = true;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         gravity = Physics.gravity * gravityMultiplier;
+        au = GetComponent<AudioSource>();
+        am = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -52,21 +59,43 @@ public class movement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity)
         {
             gravity = -gravity;
-            StartCoroutine(Lerp(lerpDuration, transform.localScale.y, -transform.localScale.y));
+            if (transform.localScale.y < 0)
+            {
+                StartCoroutine(Lerp(lerpDuration, -1, 1));
+            }
+            else
+            {
+                StartCoroutine(Lerp(lerpDuration, 1, -1));
+            }
             animator.SetBool("jump", true);
+            am.playGravitySwitch(au);
         }
         
         // Kill player if they stop moving or fall off
-        if((Mathf.Abs(rb.velocity.x) <= killSpeed && !dead) || Mathf.Abs(transform.position.y) > killDistance)
+        if((Mathf.Abs(rb.velocity.x) <= killSpeed  || Mathf.Abs(transform.position.y) > killDistance) && !dead)
         {
             die();
         }
+
+        if (isGrounded && playFootsteps)
+        {
+            am.playFootsteps(footsteps);
+            playFootsteps = false;
+        }
+        else if (!isGrounded && !playFootsteps)
+        {
+            am.stopFootsteps(footsteps);
+            playFootsteps = true;
+        }
+
+        // Debug.Log(rb.velocity);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         // reset gravity flip
         animator.SetBool("jump", false);
+        am.playLandingSound(au);
     }
 
     public void die()
@@ -75,6 +104,8 @@ public class movement : MonoBehaviour
         StartCoroutine(turnOffplayer());
         speed = 0f;
         dead = true;
+        am.bgmOff();
+        am.playExplode(au);
     }
 
     // Lerp animation for flipping gravity
