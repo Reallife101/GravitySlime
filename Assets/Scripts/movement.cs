@@ -59,13 +59,20 @@ public class movement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity)
         {
             gravity = -gravity;
-            StartCoroutine(Lerp(lerpDuration, transform.localScale.y, -transform.localScale.y));
+            if (transform.localScale.y < 0)
+            {
+                StartCoroutine(Lerp(lerpDuration, -1, 1));
+            }
+            else
+            {
+                StartCoroutine(Lerp(lerpDuration, 1, -1));
+            }
             animator.SetBool("jump", true);
             am.playGravitySwitch(au);
         }
         
         // Kill player if they stop moving or fall off
-        if((Mathf.Abs(rb.velocity.x) <= killSpeed && !dead) || Mathf.Abs(transform.position.y) > killDistance)
+        if((Mathf.Abs(rb.velocity.x) <= killSpeed  || Mathf.Abs(transform.position.y) > killDistance) && !dead)
         {
             die();
         }
