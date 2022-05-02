@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class movement : MonoBehaviour
 {
@@ -96,6 +97,7 @@ public class movement : MonoBehaviour
         // reset gravity flip
         animator.SetBool("jump", false);
         am.playLandingSound(au);
+        CameraShaker.Instance.ShakeOnce(2f, 2f, 0.05f, .05f);
     }
 
     public void die()
