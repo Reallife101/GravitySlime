@@ -24,8 +24,10 @@ public class movement : MonoBehaviour
     public float speed = 6.0f;
     public bool canChangeGravity = true;
     public bool infiniteGravSwitch = false;
+    private float default_speed;
 
     Vector3 gravity;
+    Vector3 respawnPoint;
     bool isGrounded;
     Rigidbody rb;
     bool dead = false;
@@ -39,6 +41,8 @@ public class movement : MonoBehaviour
         gravity = Physics.gravity * gravityMultiplier;
         au = GetComponent<AudioSource>();
         am = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        respawnPoint = transform.position;
+        default_speed = speed;
     }
 
     // Update is called once per frame
@@ -109,6 +113,20 @@ public class movement : MonoBehaviour
         am.bgmOff();
         am.playExplode(au);
     }
+    
+    public void respawn()
+    {
+        speed = default_speed;
+        gameObject.SetActive(true);
+        transform.position = respawnPoint;
+        am.bgmOn();
+        dead = false;
+    }
+
+    public void setRespawn(){
+        respawnPoint = transform.position;
+        Debug.Log("respawn: " + respawnPoint);
+    }
 
     // Lerp animation for flipping gravity
     IEnumerator Lerp(float lerpDuration, float start, float end)
@@ -127,6 +145,7 @@ public class movement : MonoBehaviour
     {
         yield return new WaitForSeconds(.75f);
         gameObject.SetActive(false);
+        respawn();
     }
 
 }
