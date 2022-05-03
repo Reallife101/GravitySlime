@@ -116,8 +116,13 @@ public class movement : MonoBehaviour
     
     public void respawn()
     {
-        speed = default_speed;
         gameObject.SetActive(true);
+        isGrounded = true;
+        if (transform.localScale.y < 0){
+            transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
+            gravity = -gravity;
+        }
+        speed = default_speed;
         transform.position = respawnPoint;
         am.bgmOn();
         dead = false;
