@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EZCameraShake;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class movement : MonoBehaviour
 {
@@ -133,6 +134,9 @@ public class movement : MonoBehaviour
         transform.position = respawnPoint;
         am.bgmOn();
         dead = false;
+        rb.AddForce(gravity, ForceMode.Acceleration);
+        //Apply forward movement
+        rb.velocity = new Vector3(speed, rb.velocity.y, 0);
     }
 
     public void setRespawn(){
