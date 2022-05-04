@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6918390223642123534}
   - component: {fileID: 6984819850772715490}
   - component: {fileID: 5865644402976526990}
+  - component: {fileID: 2437049794559325550}
   m_Layer: 0
   m_Name: fist
   m_TagString: Untagged
@@ -109,3 +110,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 16, y: 2.22, z: 0.2}
   m_Center: {x: 0, y: -0.17, z: 0}
+--- !u!65 &2437049794559325550
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006086309548100891}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.3543777, y: 3.7557786, z: 0.2}
+  m_Center: {x: 6.322811, y: -0.122110724, z: 0}
