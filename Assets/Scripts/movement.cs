@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using EZCameraShake;
 
 public class movement : MonoBehaviour
@@ -24,6 +25,7 @@ public class movement : MonoBehaviour
     public float speed = 6.0f;
     public bool canChangeGravity = true;
     public bool infiniteGravSwitch = false;
+    public Text deathCount;
     private float default_speed;
 
     Vector3 gravity;
@@ -31,12 +33,14 @@ public class movement : MonoBehaviour
     bool isGrounded;
     Rigidbody rb;
     bool dead = false;
+    int deaths = 0;
     AudioSource au;
     AudioManager am;
     bool playFootsteps = true;
 
     private void Start()
     {
+        deathCount.text = "Deaths: 0";
         rb = GetComponent<Rigidbody>();
         gravity = Physics.gravity * gravityMultiplier;
         au = GetComponent<AudioSource>();
@@ -106,6 +110,8 @@ public class movement : MonoBehaviour
 
     public void die()
     {
+        deaths++;
+        deathCount.text = "Deaths: " + deaths;
         animator.SetTrigger("death");
         StartCoroutine(turnOffplayer());
         speed = 0f;
