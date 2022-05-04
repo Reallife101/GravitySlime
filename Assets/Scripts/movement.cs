@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EZCameraShake;
+using TMPro;
 
 public class movement : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class movement : MonoBehaviour
     public float speed = 6.0f;
     public bool canChangeGravity = true;
     public bool infiniteGravSwitch = false;
-    public Text deathCount;
+    public TMP_Text deathCount;
     private float default_speed;
 
     Vector3 gravity;
