@@ -30,7 +30,7 @@ public class movement : MonoBehaviour
     public TMP_Text deathCount;
     private float default_speed;
 
-    Vector3 gravity;
+    public Vector3 gravity;
     Vector3 respawnPoint;
     bool isGrounded;
     Rigidbody rb;
@@ -67,7 +67,7 @@ public class movement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Flip gravity and play animation
-        if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity)
+        if (Input.GetButtonDown("Jump") && (isGrounded || infiniteGravSwitch) && canChangeGravity && !dead)
         {
             gravity = -gravity;
             if (transform.localScale.y < 0)
@@ -133,14 +133,14 @@ public class movement : MonoBehaviour
         speed = default_speed;
         transform.position = respawnPoint;
         am.bgmOn();
-        dead = false;
         rb.AddForce(gravity, ForceMode.Acceleration);
         //Apply forward movement
         rb.velocity = new Vector3(speed, rb.velocity.y, 0);
+        dead = false;
     }
 
-    public void setRespawn(){
-        respawnPoint = transform.position;
+    public void setRespawn(Vector3 location){
+        respawnPoint = location;
         Debug.Log("respawn: " + respawnPoint);
     }
 
