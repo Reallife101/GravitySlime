@@ -156,7 +156,7 @@ MonoBehaviour:
   killDistance: 10
   killSpeed: 0
   groundCheck: {fileID: 4418223163073745283}
-  groundDistance: 0.4
+  groundDistance: 0.1
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -164,6 +164,7 @@ MonoBehaviour:
   speed: 9
   canChangeGravity: 1
   infiniteGravSwitch: 0
+  deathCount: {fileID: 0}
 --- !u!54 &4418223163526175667
 Rigidbody:
   m_ObjectHideFlags: 0
