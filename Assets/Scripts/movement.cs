@@ -22,6 +22,7 @@ public class movement : MonoBehaviour
     [SerializeField] LayerMask groundMask;
 
     [SerializeField] AudioSource footsteps;
+    [SerializeField] BossFight bf;
 
     // Player Attributes
     public float speed = 6.0f;
@@ -124,6 +125,10 @@ public class movement : MonoBehaviour
     
     public void respawn()
     {
+        if (bf)
+        {
+            bf.stopC();
+        }
         gameObject.SetActive(true);
         isGrounded = true;
         if (transform.localScale.y < 0){

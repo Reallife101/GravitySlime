@@ -7,11 +7,31 @@ public class BossFight : MonoBehaviour
     [SerializeField] GameObject bbeg;
     [SerializeField] SpriteRenderer sr;
     [SerializeField] List<GameObject> fists;
+    [SerializeField] GameObject camera;
+    [SerializeField] GameObject cObject;
+
+    private IEnumerator coroutine;
     private void OnTriggerEnter(Collider other)
     {
         bbeg.SetActive(true);
         StartCoroutine(Lerp(3f));
-        StartCoroutine(fight(1.5f));
+        coroutine = fight(1.5f);
+        StartCoroutine(coroutine);
+    }
+
+    public void stopC()
+    {
+        StopCoroutine(coroutine);
+
+        foreach (GameObject fist in fists)
+        {
+            fist.GetComponent<movePlayer>().displacement = new Vector3(30f, fist.transform.position.y, 0);
+        }
+
+        camera.GetComponent<movePlayer>().displacement = new Vector3(10f, 0f, -12f);
+        cObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+
+        bbeg.SetActive(false);
     }
 
     IEnumerator Lerp(float lerpDuration)
