@@ -108,7 +108,7 @@ public class movement : MonoBehaviour
         // reset gravity flip
         animator.SetBool("jump", false);
         am.playLandingSound(au);
-        CameraShaker.Instance.ShakeOnce(2f, 2f, 0.05f, .05f);
+        CameraShaker.Instance.ShakeOnce(1f, 2f, 0.05f, .05f);
     }
 
     public void die()

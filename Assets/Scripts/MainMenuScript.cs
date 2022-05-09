@@ -13,6 +13,8 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] float xDistance = 40;
     [SerializeField] string[] levelNames;
     [SerializeField] GameObject levelScreen;
+    [SerializeField] GameObject MainMenu;
+    [SerializeField] GameObject Credits;
     public GameObject levelIconPrefab;
     public GameObject thisCanvas;
     public Vector2 iconSpacing;
@@ -22,6 +24,16 @@ public class MainMenuScript : MonoBehaviour
     void Start()
     {
         iconDimensions = levelIconPrefab.GetComponent<RectTransform>().rect;
+    }
+    public void menuOn()
+    {
+        MainMenu.SetActive(true);
+        Credits.SetActive(false);
+    }
+    public void menuOff()
+    {
+        MainMenu.SetActive(false);
+        Credits.SetActive(true);
     }
     public void LoadPanels()
     {
