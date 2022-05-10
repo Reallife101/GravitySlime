@@ -2076,11 +2076,11 @@ MonoBehaviour:
   Player: {fileID: 2109839397}
   xDistance: 40
   levelNames:
-  - Ryan's Test Scene
+  - IntroVideoScene
   - Ryan's Level 1-1
   - Jacob's Level 1-2
-  - This Doesn't Exist
-  - Another Level
+  - Griffin's Level
+  - Ryan's Test Scene
   levelScreen: {fileID: 337222166}
   MainMenu: {fileID: 834278821}
   Credits: {fileID: 1324862580}

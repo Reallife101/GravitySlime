@@ -13,7 +13,7 @@ public class StartButtonClick : MonoBehaviour
     
     public void StartGame()
     {
-        LoadLevel("Ryan's Level 1-1");
+        LoadLevel("IntroVideoScene");
     }
 
     public void LoadLevel(string name)
