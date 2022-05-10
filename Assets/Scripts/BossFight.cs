@@ -21,6 +21,8 @@ public class BossFight : MonoBehaviour
 
     public void stopC()
     {
+        if (coroutine == null)
+            return;
         StopCoroutine(coroutine);
 
         foreach (GameObject fist in fists)
