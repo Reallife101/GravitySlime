@@ -13,8 +13,10 @@ public class LoadWhenVidoeOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        VidPlayer.Play();
+        
     }
+
+
 
     // Update is called once per frame
     void Update()
