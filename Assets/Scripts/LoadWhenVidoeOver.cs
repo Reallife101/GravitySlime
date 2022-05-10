@@ -9,6 +9,7 @@ public class LoadWhenVidoeOver : MonoBehaviour
 
     [SerializeField] VideoPlayer VidPlayer;
     [SerializeField] string NextSceneName;
+    private bool playing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,11 @@ public class LoadWhenVidoeOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!VidPlayer.isPlaying)
+        if(VidPlayer.isPlaying)
+        {
+            playing = true;
+        }
+        if(playing & !VidPlayer.isPlaying)
         {
             SceneManager.LoadSceneAsync(NextSceneName);
         }

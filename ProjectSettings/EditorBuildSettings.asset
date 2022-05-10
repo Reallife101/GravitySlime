@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/1-1 copy.unity
     guid: f128c8af4c2f5324580f3724682ab355
   - enabled: 1
+    path: Assets/Scenes/IntroVideoScene.unity
+    guid: cda9143339639a24f8204fd2983536bb
+  - enabled: 1
     path: Assets/Scenes/Griffin's Level.unity
     guid: 39bf7950224fd3a4a8a2623cc0c2369e
   - enabled: 1
